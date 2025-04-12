@@ -149,3 +149,25 @@ vector<int> inOrder(Node* root) {
         return ans;
     }
 ```
+### postorder using 2 stacks
+```
+vector<int> postOrder(Node* root) {
+        // Your code here
+        vector<int> ans;
+        if(root==NULL)return ans;
+        stack<Node*> st1, st2;
+        st1.push(root);
+        while(!st.empty()){
+            root = st.top();
+            st1.pop();
+            st2.push(root);
+            if(root->left!=NULL) st1.push(root->left);
+            if(root->right!=NULL) st1.push(root->right);
+        }
+        while(!st2.empty()){
+            ans.push_back(st2.top()->data);
+            st2.pop();
+        }
+        return ans;
+    }
+```
