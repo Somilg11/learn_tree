@@ -29,3 +29,7 @@ public:
     }
 };
 ```
+## Diameter of Binary tree
+```
+
+```
