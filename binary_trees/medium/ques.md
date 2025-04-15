@@ -31,5 +31,19 @@ public:
 ```
 ## Diameter of Binary tree
 ```
-
+class Solution {
+public:
+    int check(TreeNode* root, int &ans){
+        if(root==NULL) return 0;
+        int left = check(root->left, ans);
+        int right = check(root->right, ans);
+        ans = max(left+right,ans);
+        return 1+max(left,right);
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        int ans = 0;
+        check(root, ans);
+        return ans;
+    }
+};
 ```
