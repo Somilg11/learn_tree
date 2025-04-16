@@ -47,3 +47,31 @@ public:
     }
 };
 ```
+## Maximum Path sum
+```
+class Solution {
+public:
+    int solve(TreeNode* root, int& ans){
+        if(root==NULL) return 0;
+        int lsum = max(0,solve(root->left, ans));
+        int rsum = max(0,solve(root->right, ans));
+        ans = max(ans, lsum+rsum+root->val);
+        return root->val + max(lsum,rsum);
+    }
+    int maxPathSum(TreeNode* root) {
+        int ans = INT_MIN;
+        solve(root, ans);
+        return ans;
+    }
+};
+```
+## Check two trees are identical
+```
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL || q==NULL) return p==q;
+        return ( (p->val == q->val) && isSameTree(p->left,q->left) && isSameTree(p->right,q->right) );
+    }
+};
+```
