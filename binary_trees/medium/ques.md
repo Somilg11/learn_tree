@@ -75,3 +75,81 @@ public:
     }
 };
 ```
+## Zig Zag Traversal
+```
+class Solution{
+    public:
+    //Function to store the zig zag order traversal of tree in a list.
+    vector <int> zigZagTraversal(Node* root)
+    {
+    	// Code here
+    	vector<int> ans;
+    	if(root == NULL) return ans;
+    	queue<Node*> q;
+    	q.push(root);
+    	bool flag = true;
+    	while(!q.empty()){
+    	    int len = q.size();
+    	    vector<int> row(len);
+    	    for(int i=0;i<len;i++){
+    	        Node* node = q.front();
+    	        q.pop();
+    	        int index = flag ? i : (len - i -1);
+    	        
+    	        row[index] = node->data;
+    	        if(node->left) q.push(node->left);
+    	        if(node->right) q.push(node->right);
+    	    }
+    	    flag = !flag;
+    	   // ans.push_back(row);
+    	   for(auto it: row) ans.push_back(it);
+    	}
+    	return ans;
+    }
+};
+```
+## Boundary Traversal
+```
+class Solution {
+  public:
+    bool isLeaf(Node* root){
+        return (root->left==NULL && root->right==NULL);
+    }
+    void addLeftBoundary(Node* root, vector<int> &res){
+        Node* cur = root->left;
+        while(cur){
+            if(!isLeaf(cur)) res.push_back(cur->data);
+            if(cur->left) cur = cur->left;
+            else cur = cur->right;
+        }
+    }
+    void addRightBoundary(Node* root, vector<int> &res){
+        Node* cur = root->right;
+        vector<int> temp;
+        while(cur){
+            if(!isLeaf(cur)) temp.push_back(cur->data);
+            if(cur->right) cur = cur->right;
+            else cur = cur->left;
+        }
+        for(int i=temp.size()-1;i>=0;i--) res.push_back(temp[i]);
+    }
+    void addLeaves(Node* root, vector<int> &res){
+        if(isLeaf(root)){
+            res.push_back(root->data);
+            return;
+        }
+        if(root->left) addLeaves(root->left, res);
+        if(root->right) addLeaves(root->right, res);
+    }
+    vector<int> boundaryTraversal(Node *root) {
+        // code here
+        vector<int> res;
+        if(root==NULL) return res;
+        if(!isLeaf(root)) res.push_back(root->data);
+        addLeftBoundary(root, res);
+        addLeaves(root, res);
+        addRightBoundary(root, res);
+        return res;
+    }
+};
+```
