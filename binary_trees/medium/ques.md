@@ -183,3 +183,109 @@ class Solution {
     }
 };
 ```
+## Top view of binary tree
+```
+class Solution {
+  public:
+    // Function to return a list of nodes visible from the top view
+    // from left to right in Binary Tree.
+    vector<int> topView(Node *root) {
+        // code here
+        vector<int> ans;
+        if(root==NULL) return ans;
+        map<int,int> mpp;
+        queue<pair<Node*, int>> q;
+        q.push({root, 0});
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+            Node* node = it.first;
+            int line = it.second;
+            if(mpp.find(line) == mpp.end()) mpp[line]=node->data;
+            if(node->left!=NULL) q.push({node->left, line-1});
+            if(node->right!=NULL) q.push({node->right, line+1});
+        }
+        for(auto it: mpp) ans.push_back(it.second);
+        return ans;
+    }
+};
+```
+## Bottom view of binary tree
+```
+class Solution {
+  public:
+    vector <int> bottomView(Node *root) {
+        // Your Code Here
+        vector<int> ans;
+        if(root==NULL) return ans;
+        map<int,int> mpp;
+        queue<pair<Node*, int>> q;
+        q.push({root, 0});
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+            Node* node = it.first;
+            int line = it.second;
+            mpp[line]=node->data;
+            if(node->left!=NULL) q.push({node->left, line-1});
+            if(node->right!=NULL) q.push({node->right, line+1});
+        }
+        for(auto it: mpp) ans.push_back(it.second);
+        return ans;
+    }
+};
+```
+## Right side view
+```
+class Solution
+{
+    public:
+    void solve(Node* root, int level, vector<int> &res){
+        if(root==NULL) return;
+        if(res.size()==level) res.push_back(root->data);
+        solve(root->right, level+1, res);
+        solve(root->left, level+1, res);
+    }
+    //Function to return list containing elements of right view of binary tree.
+    vector<int> rightView(Node *root)
+    {
+       // Your Code here
+       vector<int> res;
+       solve(root, 0, res);
+       return res;
+    }
+};
+```
+## Left side view
+```
+class Solution {
+  public:
+  void solve(Node* root, int level, vector<int> &res){
+        if(root==NULL) return;
+        if(res.size()==level) res.push_back(root->data);
+        solve(root->left, level+1, res);
+        solve(root->right, level+1, res);
+    }
+    vector<int> leftView(Node *root) {
+        // code here
+        vector<int> res;
+        solve(root, 0, res);
+        return res;
+    }
+};
+```
+## check if tree symmetric
+```
+class Solution {
+  public:
+    bool check(Node* left, Node* right){
+        if(left==NULL || right==NULL) return left==right;
+        if(left->data!=right->data) return false;
+        return check(left->left, right->right) && check(left->right, right->left);
+    }
+    bool isSymmetric(Node* root) {
+        // Code here
+        return (root==NULL) || check(root->left, root->right);
+    }
+};
+```
